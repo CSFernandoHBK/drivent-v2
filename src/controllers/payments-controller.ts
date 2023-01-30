@@ -1,5 +1,4 @@
 import { AuthenticatedRequest } from "@/middlewares";
-import enrollmentsService from "@/services/enrollments-service";
 import paymentService from "@/services/payments-service";
 import { Response } from "express";
 import httpStatus from "http-status";
@@ -13,8 +12,14 @@ export async function checkPayment(req: AuthenticatedRequest, res: Response) {
     }
 
     try{
-      return res.send()
+      const response = await paymentService.checkPayment(Number(ticketId))
+
+      return res.send(response)
     } catch(err){
+      if(err.name==="NotFoundError"){
+        return res.status(404).send(err.message)
+      }
+      return res.sendStatus(500)
       console.log(err)
     }
 }

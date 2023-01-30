@@ -11,6 +11,7 @@ async function newPayment(paymentInfo: PaymentInfo){
     }
 
     const ticketTypeInfo = await ticketsRepository.getTicketType(ticketInfo.ticketTypeId)
+
     return prisma.payment.create({
         data:{
            "ticketId": paymentInfo.ticketId,
@@ -21,13 +22,29 @@ async function newPayment(paymentInfo: PaymentInfo){
     })
 }
 
-async function checkPayment(){
+async function checkPayment(ticketId: number){
+    return await prisma.payment.findFirst({
+        where: {
+            ticketId: ticketId
+        }
+    })
+}
 
+async function updateTicket(ticketId: number) {
+    await prisma.ticket.update({
+        where: {
+            id: ticketId
+        },
+        data: {
+            status: "PAID"
+        }
+    })
 }
 
 const paymentRepository = {
     newPayment,
-    checkPayment
+    checkPayment,
+    updateTicket
 }
 
 export default paymentRepository

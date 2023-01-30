@@ -10,11 +10,19 @@ async function newPayment(paymentInfo: PaymentInfo){
         throw notFoundError();
     }
 
+    await paymentRepository.updateTicket(paymentInfo.ticketId)
+
     return response;
 }
 
-async function checkPayment(){
-
+async function checkPayment(ticketId: number){
+    const result = await paymentRepository.checkPayment(ticketId)
+    
+    if(!result){
+        throw notFoundError();
+    }
+    
+    return result
 }
 
 const paymentService = {
