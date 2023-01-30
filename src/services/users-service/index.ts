@@ -31,6 +31,10 @@ async function canEnrollOrFail() {
   }
 }
 
+async function getUserByToken(){
+  
+}
+
 export type CreateUserParams = Pick<User, "email" | "password">;
 
 const userService = {

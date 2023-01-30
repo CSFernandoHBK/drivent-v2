@@ -14,11 +14,28 @@ export async function getTicketTypes(req: Request, res: Response) {
   }
   
 export async function getTicketsForUser(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  
     try{
-
-
-        return res.send()
+      const tickets = await ticketsService.getTicketsByUser(userId)
+      return res.status(200).send(tickets)
     } catch(err){
       console.log(err)
     }
+}
+
+export async function postNewTicket(req: AuthenticatedRequest, res: Response){
+  const { userId } = req;
+  const ticketTypeId = req.body.ticketTypeId as number;
+
+  if(!ticketTypeId){
+    return res.status(400).send(httpStatus[400])
+  }
+
+  try{
+    const newTicket = await ticketsService.postNewTicket(ticketTypeId, userId)
+    return res.status(201).send(newTicket)
+  } catch(err){
+      console.log(err)
+  }
 }
