@@ -38,7 +38,7 @@ export type PaymentInfo = {
 export async function newPayment(req: AuthenticatedRequest, res: Response){
   const paymentInfo: PaymentInfo = req.body;
 
-  const {error} = paymentValidationSchema.validate(req.body, {abortEarly: false});
+  const {error} = paymentValidationSchema.validate(paymentInfo, {abortEarly: false});
 
   if (error){
       const errors = error.details.map((detail) => detail.message);

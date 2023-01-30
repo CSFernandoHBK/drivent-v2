@@ -10,6 +10,7 @@ export async function getTicketTypes(req: Request, res: Response) {
         return res.status(httpStatus.OK).send(types)
     } catch(err){
       console.log(err)
+      return res.sendStatus(500)
     }
   }
   
@@ -20,9 +21,10 @@ export async function getTicketsForUser(req: AuthenticatedRequest, res: Response
       if(tickets.length===0){
         return res.sendStatus(404)
       }
-      return res.status(200).send(tickets)
+      return res.status(200).send(tickets[0])
     } catch(err){
       console.log(err)
+      return res.sendStatus(500)
     }
 }
 
@@ -39,5 +41,6 @@ export async function postNewTicket(req: AuthenticatedRequest, res: Response){
     return res.status(201).send(newTicket)
   } catch(err){
       console.log(err)
+      return res.sendStatus(500)
   }
 }

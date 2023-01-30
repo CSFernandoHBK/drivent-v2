@@ -8,7 +8,7 @@ const paymentValidationSchema = Joi.object({
         name: Joi.string().max(70).required(),
         expirationDate: Joi.date().required(),
         cvv: Joi.string().max(3).required()
-    })
+    }).required()
 })
 
 export {paymentValidationSchema}
