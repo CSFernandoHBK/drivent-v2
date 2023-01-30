@@ -6,13 +6,11 @@ async function findTicketTypes() {
 }
 
 async function getTicketsByUser(enrollmentId: number){
-    const result = prisma.ticket.findMany({
+    return prisma.ticket.findMany({
         where:{
             enrollmentId: enrollmentId
         }
     })
-    console.log(result)
-    return result
 }
 
 async function getTicketType(ticketTypeId: number){

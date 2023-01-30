@@ -15,9 +15,11 @@ export async function getTicketTypes(req: Request, res: Response) {
   
 export async function getTicketsForUser(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
-  
     try{
       const tickets = await ticketsService.getTicketsByUser(userId)
+      if(tickets.length===0){
+        return res.sendStatus(404)
+      }
       return res.status(200).send(tickets)
     } catch(err){
       console.log(err)

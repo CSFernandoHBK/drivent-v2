@@ -15,7 +15,7 @@ async function getTicketTypes(){
 async function getTicketsByUser(userId: number){
     const enrollmentId = (await enrollmentRepository.findWithAddressByUserId(userId)).id;
     const userTickets = await ticketsRepository.getTicketsByUser(enrollmentId)
-    const array = userTickets.map(async (u) => await processData(u))
+    const array = await Promise.all(userTickets.map(async (item) => await processData(item)))
     return array;
 }
 
